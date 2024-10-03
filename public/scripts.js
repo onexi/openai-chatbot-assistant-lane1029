@@ -5,20 +5,49 @@ let state = {
   threadId: null,
   messages: [],
 };
-async function getAssistant(){
-  let name = document.getElementById('assistant_name').value;
-  console.log(`assistant_id: ${name}`)
-  const response = await fetch('/api/assistants', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name: name }),
-  });
-  state = await response.json();  // the state object is updated with the response from the server
-  writeToMessages(`Assistant ${state.assistant_name} is ready to chat`);
-  console.log(`back from fetch with state: ${JSON.stringify(state)}`)
+// Fetch available assistants from the server
+async function fetchAssistants() {
+  try {
+    const response = await fetch('/assistants');
+    const data = await response.json();
+
+    console.log('API response:', data);
+    
+    const select = document.getElementById('assistant-select');
+
+    data.assistants.forEach(assistant => {
+      const option = document.createElement('option');
+      option.value = assistant.id; // Assuming the API returns an 'id' for each assistant
+      option.text = assistant.name; // Assuming the API returns a 'name' for each assistant
+      select.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Error fetching assistants:', error);
+  }
 }
+
+// Call API to select an assistant
+async function selectAssistant() {
+  const select = document.getElementById('assistant-select');
+  const assistantId = select.value;
+
+  if (assistantId) {
+    const response = await fetch('/select-assistant', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ assistant_id: assistantId })
+    });
+
+    const result = await response.json();
+    const messageDiv = document.getElementById('message');
+    messageDiv.innerText = result.message;
+  }
+}
+
+// Automatically load assistants on page load
+window.onload = fetchAssistants;
 
 async function getThread(){
 

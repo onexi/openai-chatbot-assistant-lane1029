@@ -29,27 +29,23 @@
     </style>
   </head>
   <body>
-    <div class="container my-5">
+    <div class="container mt-5">
       <h1 class="text-center">Assistant Chat</h1>
 
       <!-- Assistant Selection -->
       <div class="mb-3">
-        <label for="assistantSelect" class="form-label">Select Assistant</label>
-        <input
-          id="assistant_name"
-          type="text"
-          value="asst_2JWXaEmwhgVBotP0QDjH9Dbm"
-        />
-        <button
-          id="get_assistant"
-          class="btn btn-primary"
-          onclick="getAssistant()"
-        >
-          Get Assistant
-        </button>
+        <label for="assistant-select" class="form-label">Choose an Assistant</label>
+        <select id="assistant-select" class="form-select" aria-label="Assistant select">
+          <option selected disabled>Select an assistant</option>
+        </select>
       </div>
+  
+      <button class="btn btn-primary" onclick="selectAssistant()">Select Assistant</button>
+  
+      <div id="message" class="mt-3"></div>
+    </div>
 
-      <!-- Create New Thread Button -->
+      Create New Thread Button
       <div class="mb-3">
         <button id="newThreadBtn" class="btn btn-primary" onclick="getThread()">
           Create New Thread
