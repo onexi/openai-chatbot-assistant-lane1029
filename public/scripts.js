@@ -46,10 +46,10 @@ async function selectAssistant() {
 
       // Update the state with the selected assistant's details
       state.assistant_id = assistantId;
-      state.assistant_name = result.assistant_name; // Assuming the API returns the assistant's name
+      state.assistant_name = result['state']['assistant_name']; // Assuming the API returns the assistant's name
 
       const messageDiv = document.getElementById('message');
-      messageDiv.innerText = `Selected Assistant: ${result.assistant_name}`;
+      messageDiv.innerText = `${result['message']}`;
     } catch (error) {
       console.error('Error selecting assistant:', error);
     }

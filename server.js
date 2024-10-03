@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(cors());
 app.use(express.static('public')); // Serve static files from the 'public' directory
 
-const PORT = 3001;
+const PORT = 3000;
 
 // State dictionary
 let state = {
