@@ -12,7 +12,7 @@ async function fetchAssistants() {
     const data = await response.json();
 
     console.log('API response:', data);
-    
+
     const select = document.getElementById('assistant-select');
 
     data.assistants.forEach(assistant => {
@@ -26,23 +26,33 @@ async function fetchAssistants() {
   }
 }
 
-// Call API to select an assistant
+// Call API to select an assistant and update the state
 async function selectAssistant() {
   const select = document.getElementById('assistant-select');
   const assistantId = select.value;
 
   if (assistantId) {
-    const response = await fetch('/select-assistant', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ assistant_id: assistantId })
-    });
+    try {
+      console.log('Selected assistant:', assistantId);
+      const response = await fetch('/select-assistant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ assistant_id: assistantId })
+      });
 
-    const result = await response.json();
-    const messageDiv = document.getElementById('message');
-    messageDiv.innerText = result.message;
+      const result = await response.json();
+
+      // Update the state with the selected assistant's details
+      state.assistant_id = assistantId;
+      state.assistant_name = result.assistant_name; // Assuming the API returns the assistant's name
+
+      const messageDiv = document.getElementById('message');
+      messageDiv.innerText = `Selected Assistant: ${result.assistant_name}`;
+    } catch (error) {
+      console.error('Error selecting assistant:', error);
+    }
   }
 }
 
