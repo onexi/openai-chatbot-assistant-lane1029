@@ -58,7 +58,6 @@ async function retrieve_assistant(assistant_id) {
     const response = await openai.beta.assistants.retrieve(
       assistant_id
     );
-    console.log(response)
     return response;
   } catch (error) {
     console.error('Error fetching assistant from OpenAI API:', error.response?.data || error.message);
@@ -77,21 +76,29 @@ app.get('/assistants', async (req, res) => {
 });
 
 // API endpoint to set the selected assistant
-app.post('/select-assistant', (req, res) => {
+app.post('/select-assistant', async (req, res) => {
   const assistant_id = req.body.assistant_id;
+  
   if (!assistant_id) {
     return res.status(400).json({ message: 'Assistant ID required.' });
   }
 
-  const assistant = retrieve_assistant(assistant_id);
-  console.log(typeof assistant)
-  
-  state.assistant_id = assistant_id;
-  state.assistant_name = assistant.name;
-  state.threadId = null; // Reset threadId when a new assistant is selected
-  state.messages = []; // Clear messages when a new assistant is selected
+  try {
+    // Await the result of the async function
+    const assistant = await retrieve_assistant(assistant_id);
+    
+    // Now that the assistant object is fully resolved, you can access its properties
+    state.assistant_id = assistant_id;
+    state.assistant_name = assistant.name; // Access the name and other attributes
+    state.threadId = null; // Reset threadId when a new assistant is selected
+    state.messages = []; // Clear messages when a new assistant is selected
 
-  res.json({ message: 'Assistant selected successfully.', state });
+    res.json({ message: 'Assistant selected successfully.', state });
+    
+  } catch (error) {
+    console.error('Error fetching assistant:', error.message);
+    res.status(500).json({ message: 'Failed to retrieve assistant.' });
+  }
 });
 
 // Start the server
