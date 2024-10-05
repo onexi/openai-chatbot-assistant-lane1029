@@ -48,7 +48,7 @@ async function selectAssistant() {
       state.assistant_id = assistantId;
       state.assistant_name = result['state']['assistant_name']; // Assuming the API returns the assistant's name
 
-      const messageDiv = document.getElementById('message');
+      const messageDiv = document.getElementById('assistant-message');
       messageDiv.innerText = `${result['message']}`;
     } catch (error) {
       console.error('Error selecting assistant:', error);
@@ -60,15 +60,35 @@ async function selectAssistant() {
 window.onload = fetchAssistants;
 
 async function getThread(){
+  try {
+    console.log('Creating thread');
+    const response = await fetch('/create-thread');
+    const result = await response.json();
 
-// Enter Code Here
+    state.threadId = result['state']['threadId'];
 
+    const messageDiv = document.getElementById('thread-message');
+    messageDiv.innerText = `${result['message']}`;
+  } catch (error) {
+    console.error('Error creating assistant:', error);
+  }
 }
+
 async function getResponse(){
+  try {
+    console.log('Sending message to assistant');
+    const response = await fetch('/create-thread');
+    const result = await response.json();
 
-// Enter Code Here
+    state.threadId = result['state']['threadId'];
 
+    const messageDiv = document.getElementById('thread-message');
+    messageDiv.innerText = `${result['message']}`;
+  } catch (error) {
+    console.error('Error creating assistant:', error);
+  }
 }
+
 async function writeToMessages(message){
   let messageDiv = document.getElementById("message-container");
   messageDiv.innerHTML = message;

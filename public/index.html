@@ -42,18 +42,15 @@
   
       <button class="btn btn-primary" onclick="selectAssistant()">Select Assistant</button>
   
-      <div id="message" class="mt-3"></div>
-    </div>
+      <div id="assistant-message" class="mt-3"></div>
 
-      Create New Thread Button
+      <!-- Thread Creation -->
       <div class="mb-3">
         <button id="newThreadBtn" class="btn btn-primary" onclick="getThread()">
           Create New Thread
         </button>
+        <div id="thread-message" class="mt-3"></div>
       </div>
-
-      <!-- Message Display -->
-      <div class="message-container" id="message-container"></div>
 
       <!-- Message Input -->
       <div class="input-group mb-3">
@@ -67,6 +64,12 @@
           placeholder="Type your message..."
         />
       </div>
+    </div>
+
+      <!-- Message Display -->
+      <div class="message-container" id="message-container"></div>
+
+      
     </div>
 
     <!-- Bootstrap JS and dependencies -->

@@ -46,7 +46,8 @@ async function get_assistants() {
       order: 'desc',
       limit: 20, // Limit to 20 assistants
     });
-    return response.data;
+    const filteredAssistants = response.data.filter(assistant => ['BankTest', 'TestAgent'].includes(assistant.name));
+    return filteredAssistants;
   } catch (error) {
     console.error('Error fetching assistants from OpenAI API:', error.response?.data || error.message);
     throw error;
@@ -61,6 +62,16 @@ async function retrieve_assistant(assistant_id) {
     return response;
   } catch (error) {
     console.error('Error fetching assistant from OpenAI API:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function create_thread() {
+  try{
+    let response = await openai.beta.threads.create()
+    return response;
+  } catch (error) {
+    console.error('Error creating thread:', error.response?.data || error.message);
     throw error;
   }
 }
@@ -98,6 +109,38 @@ app.post('/select-assistant', async (req, res) => {
   } catch (error) {
     console.error('Error fetching assistant:', error.message);
     res.status(500).json({ message: 'Failed to retrieve assistant.' });
+  }
+});
+
+// API endpoint to create a thread
+app.get('/create-thread', async (req, res) => {
+  try {
+    const thread = await create_thread();
+    state.threadId = thread.id;
+    res.json({message: 'Thread created successfully.', state});
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create a thread.' });
+  }
+});
+
+app.post('/send-message', async (req, res) => {
+  const message = req.body.message;
+  const threadId = state.threadId;
+
+  if (!message || !threadId) {
+    return res.status(400).json({ message: 'Message and threadId required.' });
+  }
+
+  try {
+    const response = await openai.beta.threads.reply(threadId, {
+      model: state.assistant_id,
+      messages: [{role: 'system', content: 'User'}, {role: 'user', content: message}]
+    });
+    state.messages.push(response.data);
+    res.json({ message: 'Message sent successfully.', state });
+  } catch (error) {
+    console.error('Error sending message:', error.message);
+    res.status(500).json({ message: 'Failed to send message.' });
   }
 });
 
