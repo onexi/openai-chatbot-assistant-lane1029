@@ -75,17 +75,28 @@ async function getThread(){
 }
 
 async function getResponse(){
-  try {
-    console.log('Sending message to assistant');
-    const response = await fetch('/create-thread');
-    const result = await response.json();
+  const select = document.getElementById('messageInput');
+  const message = select.value;
 
-    state.threadId = result['state']['threadId'];
-
-    const messageDiv = document.getElementById('thread-message');
-    messageDiv.innerText = `${result['message']}`;
-  } catch (error) {
-    console.error('Error creating assistant:', error);
+  if (message !=='Type your message...') {
+    try {
+      document.getElementById('messageInput').value = 'Type your message...';
+      console.log('Retrieving response for:', message);
+      state.messages.push({'User': message});
+      
+      const response = await fetch('/retrieve-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 'message': message })
+      });
+      writeToMessages("User: "+ message)
+      const result = await response.json();
+      
+    } catch (error) {
+      console.error('Error creating assistant:', error);
+    }
   }
 }
 

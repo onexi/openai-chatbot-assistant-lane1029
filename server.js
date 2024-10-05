@@ -76,6 +76,15 @@ async function create_thread() {
   }
 }
 
+async function get_all_messages(messages) {
+  console.log(`In get_all_messages: ${JSON.stringify(messages)}`)
+  let all_messages =[]
+  let full_response = messages.data.filter(message => message.role === 'assistant');
+  let content = JSON.stringify(full_response.map(message => message.content));
+  console.log(content)
+  return response_message;
+}
+
 // API endpoint to fetch assistants and send them to the client
 app.get('/assistants', async (req, res) => {
   try {
@@ -123,7 +132,8 @@ app.get('/create-thread', async (req, res) => {
   }
 });
 
-app.post('/send-message', async (req, res) => {
+app.post('/retrieve-response', async (req, res) => {
+  console.log(req.body)
   const message = req.body.message;
   const threadId = state.threadId;
 
@@ -131,17 +141,36 @@ app.post('/send-message', async (req, res) => {
     return res.status(400).json({ message: 'Message and threadId required.' });
   }
 
+  state.messages.push({'User': message});
+
   try {
-    const response = await openai.beta.threads.reply(threadId, {
-      model: state.assistant_id,
-      messages: [{role: 'system', content: 'User'}, {role: 'user', content: message}]
-    });
-    state.messages.push(response.data);
-    res.json({ message: 'Message sent successfully.', state });
-  } catch (error) {
-    console.error('Error sending message:', error.message);
-    res.status(500).json({ message: 'Failed to send message.' });
+    let thread_id = state.threadId;
+    console.log(`In run_agent state: ${JSON.stringify(state)}`)
+    await openai.beta.threads.messages.create(thread_id,
+        {
+            role: "user",
+            content: message,
+        })
+    // run and poll thread V2 API feature
+    let run = await openai.beta.threads.runs.createAndPoll(thread_id, {
+        assistant_id: state.assistant_id
+    })
+    let run_id = run.id;
+    state.run_id = run_id;
+
+
+    // now retrieve the messages
+    let messages = await openai.beta.threads.messages.list(thread_id);
+    let all_messages = get_all_messages(messages);
+    console.log(`Run Finished: ${JSON.stringify(all_messages)}`)
+    res.json({all_messages});
   }
+  catch (error) {
+      console.log(error);
+      return error;
+  }
+
+  
 });
 
 // Start the server

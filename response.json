@@ -1,0 +1,104 @@
+{
+    "options": {
+        "method": "get",
+        "path": "/threads/thread_PLkOK0UYfhuFZb9qxp8dmKKg/messages",
+        "query": {},
+        "headers": {
+            "OpenAI-Beta": "assistants=v2"
+        }
+    },
+    "response": {
+        "size": 0,
+        "timeout": 0
+    },
+    "body": {
+        "object": "list",
+        "data": [
+            {
+                "id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
+                "object": "thread.message",
+                "created_at": 1728162644,
+                "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+                "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+                "run_id": "run_9gV7mKwPePi6dxPlSWRkMACe",
+                "role": "assistant",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "Hi! How can I assist you today with the information from the uploaded files?",
+                            "annotations": []
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            },
+            {
+                "id": "msg_SdHB9XV42HuScme0nBe6zYab",
+                "object": "thread.message",
+                "created_at": 1728162643,
+                "assistant_id": null,
+                "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+                "run_id": null,
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "Hello",
+                            "annotations": []
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            }
+        ],
+        "first_id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
+        "last_id": "msg_SdHB9XV42HuScme0nBe6zYab",
+        "has_more": false
+    },
+    "data": [
+        {
+            "id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
+            "object": "thread.message",
+            "created_at": 1728162644,
+            "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+            "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+            "run_id": "run_9gV7mKwPePi6dxPlSWRkMACe",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "Hi! How can I assist you today with the information from the uploaded files?",
+                        "annotations": []
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        },
+        {
+            "id": "msg_SdHB9XV42HuScme0nBe6zYab",
+            "object": "thread.message",
+            "created_at": 1728162643,
+            "assistant_id": null,
+            "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+            "run_id": null,
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "Hello",
+                        "annotations": []
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        }
+    ]
+}
