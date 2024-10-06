@@ -46,7 +46,9 @@ async function get_assistants() {
       order: 'desc',
       limit: 20, // Limit to 20 assistants
     });
-    const filteredAssistants = response.data.filter(assistant => ['BankTest', 'TestAgent'].includes(assistant.name));
+    // Filter the assistants to only include the ones you want to display
+    // This can be updated if there are more assiatants you want the user to choose from
+    const filteredAssistants = response.data.filter(assistant => ['BankTest'].includes(assistant.name));
     return filteredAssistants;
   } catch (error) {
     console.error('Error fetching assistants from OpenAI API:', error.response?.data || error.message);
@@ -54,6 +56,7 @@ async function get_assistants() {
   }
 }
 
+// Function to retrieve an assistant from OpenAI API
 async function retrieve_assistant(assistant_id) {
   try {
     const response = await openai.beta.assistants.retrieve(
@@ -66,6 +69,7 @@ async function retrieve_assistant(assistant_id) {
   }
 }
 
+// Function to create a thread
 async function create_thread() {
   try{
     let response = await openai.beta.threads.create()
@@ -76,15 +80,22 @@ async function create_thread() {
   }
 }
 
+// Function to clean the response from the OpenAI API
+// Removes citation placeholders from the response
 function cleanResponse(response) {
   return response.replace(/【\d+:\d+†source】/g, ''); // Removes citation placeholders
 }
 
+// Function to get all messages from the thread and filter on just the most recent response
 async function get_all_messages(messages) {
   let full_response = JSON.stringify(messages);
   full_response = JSON.parse(full_response);
+
+  // Get the most recent response from the assistant
   let content = full_response.data[0].content
   let response_message = content[0].text.value;
+
+  // Clean the response for citation placeholders
   const cleanedMessage = cleanResponse(response_message);
   return cleanedMessage;
 }
@@ -111,7 +122,7 @@ app.post('/select-assistant', async (req, res) => {
     // Await the result of the async function
     const assistant = await retrieve_assistant(assistant_id);
     
-    // Now that the assistant object is fully resolved, you can access its properties
+    // Now that the assistant object is fully resolved, we can access its properties and update state
     state.assistant_id = assistant_id;
     state.assistant_name = assistant.name; // Access the name and other attributes
     state.threadId = null; // Reset threadId when a new assistant is selected
@@ -128,7 +139,10 @@ app.post('/select-assistant', async (req, res) => {
 // API endpoint to create a thread
 app.get('/create-thread', async (req, res) => {
   try {
+    // Create a new thread
     const thread = await create_thread();
+
+    // Update the state with the thread ID
     state.threadId = thread.id;
     res.json({message: 'Thread created successfully.', state});
   } catch (error) {
@@ -136,45 +150,48 @@ app.get('/create-thread', async (req, res) => {
   }
 });
 
+// API endpoint to retrieve a response from the assistant
 app.post('/retrieve-response', async (req, res) => {
   const message = req.body.message;
   const threadId = state.threadId;
 
+  // Check if the message and threadId are provided
   if (!message || !threadId) {
     return res.status(400).json({ message: 'Message and threadId required.' });
   }
 
+  // Add user's message to the state
   state.messages.push({'role': 'User', 'message': message});
 
   try {
     let thread_id = state.threadId;
+    // Send user's message to the OpenAI API
     await openai.beta.threads.messages.create(thread_id,
         {
             role: "user",
             content: message,
         })
-    // run and poll thread V2 API feature
+    // Run and poll thread V2 API feature
     let run = await openai.beta.threads.runs.createAndPoll(thread_id, {
         assistant_id: state.assistant_id
     })
+    // update the state with the run ID
     let run_id = run.id;
     state.run_id = run_id;
 
-
-    // now retrieve the messages
+    // Retrieve the messages from the thread
     let messages = await openai.beta.threads.messages.list(thread_id);
     let all_messages = await get_all_messages(messages);
     all_messages = all_messages.toString();
+    
+    // Add assistant's response to the state
     state.messages.push({'role': 'Assistant', 'message': all_messages});
-    console.log(state)
     res.json({'response_message': all_messages});
   }
   catch (error) {
       console.log(error);
       return error;
   }
-
-  
 });
 
 // Start the server

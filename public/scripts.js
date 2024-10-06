@@ -13,6 +13,7 @@ async function fetchAssistants() {
 
     const select = document.getElementById('assistant-select');
 
+    // list all the assistants in the dropdown
     data.assistants.forEach(assistant => {
       const option = document.createElement('option');
       option.value = assistant.id; // Assuming the API returns an 'id' for each assistant
@@ -29,6 +30,7 @@ async function selectAssistant() {
   const select = document.getElementById('assistant-select');
   const assistantId = select.value;
 
+  // Check if an assistant has been selected
   if (assistantId!=="Select an assistant") {
     try {
       const response = await fetch('/select-assistant', {
@@ -45,12 +47,13 @@ async function selectAssistant() {
       state.assistant_id = assistantId;
       state.assistant_name = result['state']['assistant_name']; // Assuming the API returns the assistant's name
 
+      // Display a message to the user
       const messageDiv = document.getElementById('assistant-message');
       messageDiv.innerText = `${result['message']}`;
     } catch (error) {
       console.error('Error selecting assistant:', error);
     }
-  } else {
+  } else { // Alert the user if they haven't selected an assistant
     alert('Please select an assistant from the drop down menu first.');
   }
 }
@@ -58,11 +61,14 @@ async function selectAssistant() {
 // Automatically load assistants on page load
 window.onload = fetchAssistants;
 
+// Function to create a thread
 async function getThread(){
+  // Check if a thread has already been created
   if (state.threadId) {
     alert('A thread has already been created.');
     return;
   }
+  // Check if an assistant has been selected
   if (!state.assistant_id) {
     alert('Please select an assistant first.');
     return;
@@ -71,8 +77,10 @@ async function getThread(){
     const response = await fetch('/create-thread');
     const result = await response.json();
 
+    // Update the state with the thread ID
     state.threadId = result['state']['threadId'];
 
+    // Display a message to the user
     const messageDiv = document.getElementById('thread-message');
     messageDiv.innerText = `${result['message']}`;
   } catch (error) {
@@ -80,24 +88,36 @@ async function getThread(){
   }
 }
 
+// Function to get the response from the assistant
 async function getResponse(){
   const select = document.getElementById('messageInput');
   const message = select.value;
+
+  // Check if an assistant has been selected
   if (!state.assistant_id) {
     alert('Please select an assistant first.');
     return;
   }
+  // Check if a thread has been created
   if (!state.threadId) {
     alert('Please create a thread first.');
     return;
   }
 
+  // Check if the user has entered a message
   if (message !=='') {
     try {
+      // Clear the input field
       document.getElementById('messageInput').value = '';
+
+      // update the state with the user's message
       state.messages.push({'role': 'User', 'message': message});
+
+      // Display the user's message
       writeToMessages("User: ", "user")
       writeToMessages(message, "user")
+
+      // Call the API to retrieve a response from the assistant
       const response = await fetch('/retrieve-response', {
         method: 'POST',
         headers: {
@@ -105,14 +125,17 @@ async function getResponse(){
         },
         body: JSON.stringify({ 'message': message })
       });
-      
       const result = await response.json();
+
+      // Update the state with the assistant's response
       state.messages.push({'role': 'Assistant', 'message': result['response_message']});
+
+      // Display the assistant's response
       writeToMessages("Assistant: ", "assistant")
       writeToMessages(result['response_message'], "assistant")
       
     } catch (error) {
-      console.error('Error creating assistant:', error);
+      console.error('Error sending or receiving a response: ', error);
     }
   }
 }
@@ -132,6 +155,7 @@ function convertMarkdownToHTML(markdown) {
   return md.render(markdown);
 }
 
+// Function to write messages to the message container
 async function writeToMessages(message, role){
   const messageContainer = document.getElementById('message-container');
   
