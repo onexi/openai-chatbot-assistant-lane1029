@@ -76,13 +76,17 @@ async function create_thread() {
   }
 }
 
+function cleanResponse(response) {
+  return response.replace(/【\d+:\d+†source】/g, ''); // Removes citation placeholders
+}
+
 async function get_all_messages(messages) {
-  console.log(`In get_all_messages: ${JSON.stringify(messages)}`)
-  let all_messages =[]
-  let full_response = messages.data.filter(message => message.role === 'assistant');
-  let content = JSON.stringify(full_response.map(message => message.content));
-  console.log(content)
-  return response_message;
+  let full_response = JSON.stringify(messages);
+  full_response = JSON.parse(full_response);
+  let content = full_response.data[0].content
+  let response_message = content[0].text.value;
+  const cleanedMessage = cleanResponse(response_message);
+  return cleanedMessage;
 }
 
 // API endpoint to fetch assistants and send them to the client
@@ -133,7 +137,6 @@ app.get('/create-thread', async (req, res) => {
 });
 
 app.post('/retrieve-response', async (req, res) => {
-  console.log(req.body)
   const message = req.body.message;
   const threadId = state.threadId;
 
@@ -141,11 +144,10 @@ app.post('/retrieve-response', async (req, res) => {
     return res.status(400).json({ message: 'Message and threadId required.' });
   }
 
-  state.messages.push({'User': message});
+  state.messages.push({'role': 'User', 'message': message});
 
   try {
     let thread_id = state.threadId;
-    console.log(`In run_agent state: ${JSON.stringify(state)}`)
     await openai.beta.threads.messages.create(thread_id,
         {
             role: "user",
@@ -161,9 +163,11 @@ app.post('/retrieve-response', async (req, res) => {
 
     // now retrieve the messages
     let messages = await openai.beta.threads.messages.list(thread_id);
-    let all_messages = get_all_messages(messages);
-    console.log(`Run Finished: ${JSON.stringify(all_messages)}`)
-    res.json({all_messages});
+    let all_messages = await get_all_messages(messages);
+    all_messages = all_messages.toString();
+    state.messages.push({'role': 'Assistant', 'message': all_messages});
+    console.log(state)
+    res.json({'response_message': all_messages});
   }
   catch (error) {
       console.log(error);

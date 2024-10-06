@@ -1,7 +1,7 @@
 {
     "options": {
         "method": "get",
-        "path": "/threads/thread_PLkOK0UYfhuFZb9qxp8dmKKg/messages",
+        "path": "/threads/thread_6s1GO0cikBBlhuLwd3XmGVJz/messages",
         "query": {},
         "headers": {
             "OpenAI-Beta": "assistants=v2"
@@ -15,18 +15,57 @@
         "object": "list",
         "data": [
             {
-                "id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
+                "id": "msg_MX7l2nhgnHcgNKaloCzOtWaF",
                 "object": "thread.message",
-                "created_at": 1728162644,
+                "created_at": 1728223829,
                 "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
-                "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
-                "run_id": "run_9gV7mKwPePi6dxPlSWRkMACe",
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+                "run_id": "run_5vbuuFx5Sx7F9tb9J9f2HJCz",
                 "role": "assistant",
                 "content": [
                     {
                         "type": "text",
                         "text": {
-                            "value": "Hi! How can I assist you today with the information from the uploaded files?",
+                            "value": "Here are some of the bank account offerings available:\n\n1. **Savings Account**\n   - **Bank**: PNC Bank\n   - **Country**: USA\n   - **Interest Rate**: 1.25% APY\n   - **Eligibility**: Minimum 18 years old, valid ID, Social Security Number\n\n2. **Checking Account**\n   - **Bank**: US Bank\n   - **Country**: USA\n   - **Rewards**: $200 sign-up bonus after meeting spending requirements\n   - **Eligibility**: Minimum 18 years old, valid ID, minimum deposit of $25【8:0†source】.\n\n3. **Money Market Account**\n   - **Bank**: Ally Bank\n   - **Country**: USA\n   - **Interest Rate**: 2.00% APY\n   - **Eligibility**: Minimum 18 years old, valid ID, Social Security Number, minimum deposit of $100【8:2†source】.\n\nIf you are interested in other types of accounts or have specific requirements, feel free to let me know!",
+                            "annotations": [
+                                {
+                                    "type": "file_citation",
+                                    "text": "【8:0†source】",
+                                    "start_index": 455,
+                                    "end_index": 467,
+                                    "file_citation": {
+                                        "file_id": "file-HyMB98nO5Nz5hYg2DsybdQYj"
+                                    }
+                                },
+                                {
+                                    "type": "file_citation",
+                                    "text": "【8:2†source】",
+                                    "start_index": 680,
+                                    "end_index": 692,
+                                    "file_citation": {
+                                        "file_id": "file-HyMB98nO5Nz5hYg2DsybdQYj"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            },
+            {
+                "id": "msg_7ieS4b51FHCEzeLgKSEb2DeE",
+                "object": "thread.message",
+                "created_at": 1728223827,
+                "assistant_id": null,
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+                "run_id": null,
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "What are your bank account offerings?",
                             "annotations": []
                         }
                     }
@@ -35,11 +74,71 @@
                 "metadata": {}
             },
             {
-                "id": "msg_SdHB9XV42HuScme0nBe6zYab",
+                "id": "msg_r6nScacSqT5H4oPGMMjFQaE1",
                 "object": "thread.message",
-                "created_at": 1728162643,
+                "created_at": 1728223799,
+                "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+                "run_id": "run_7QaYWczJgpj2YxO7Ck29dnXA",
+                "role": "assistant",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "Of course! Could you please specify which products or services you are interested in learning more about? This will help me provide you with the most relevant information.",
+                            "annotations": []
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            },
+            {
+                "id": "msg_A5ExBrtoThedPIEuPIZYy0dI",
+                "object": "thread.message",
+                "created_at": 1728223796,
                 "assistant_id": null,
-                "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+                "run_id": null,
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "I would like to learn about your products",
+                            "annotations": []
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            },
+            {
+                "id": "msg_A33yDwfhAdx0WU2HoYtq6ZOz",
+                "object": "thread.message",
+                "created_at": 1728223761,
+                "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+                "run_id": "run_0uMTMNRzH2ACl1LZso0lxvQk",
+                "role": "assistant",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "value": "Hi! How can I assist you today?",
+                            "annotations": []
+                        }
+                    }
+                ],
+                "attachments": [],
+                "metadata": {}
+            },
+            {
+                "id": "msg_E7atrNOD9ndgjaEkMQ7HALvC",
+                "object": "thread.message",
+                "created_at": 1728223759,
+                "assistant_id": null,
+                "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
                 "run_id": null,
                 "role": "user",
                 "content": [
@@ -55,24 +154,63 @@
                 "metadata": {}
             }
         ],
-        "first_id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
-        "last_id": "msg_SdHB9XV42HuScme0nBe6zYab",
+        "first_id": "msg_MX7l2nhgnHcgNKaloCzOtWaF",
+        "last_id": "msg_E7atrNOD9ndgjaEkMQ7HALvC",
         "has_more": false
     },
     "data": [
         {
-            "id": "msg_T6xJEMKA8WKlghqO4PiqkHSO",
+            "id": "msg_MX7l2nhgnHcgNKaloCzOtWaF",
             "object": "thread.message",
-            "created_at": 1728162644,
+            "created_at": 1728223829,
             "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
-            "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
-            "run_id": "run_9gV7mKwPePi6dxPlSWRkMACe",
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+            "run_id": "run_5vbuuFx5Sx7F9tb9J9f2HJCz",
             "role": "assistant",
             "content": [
                 {
                     "type": "text",
                     "text": {
-                        "value": "Hi! How can I assist you today with the information from the uploaded files?",
+                        "value": "Here are some of the bank account offerings available:\n\n1. **Savings Account**\n   - **Bank**: PNC Bank\n   - **Country**: USA\n   - **Interest Rate**: 1.25% APY\n   - **Eligibility**: Minimum 18 years old, valid ID, Social Security Number\n\n2. **Checking Account**\n   - **Bank**: US Bank\n   - **Country**: USA\n   - **Rewards**: $200 sign-up bonus after meeting spending requirements\n   - **Eligibility**: Minimum 18 years old, valid ID, minimum deposit of $25【8:0†source】.\n\n3. **Money Market Account**\n   - **Bank**: Ally Bank\n   - **Country**: USA\n   - **Interest Rate**: 2.00% APY\n   - **Eligibility**: Minimum 18 years old, valid ID, Social Security Number, minimum deposit of $100【8:2†source】.\n\nIf you are interested in other types of accounts or have specific requirements, feel free to let me know!",
+                        "annotations": [
+                            {
+                                "type": "file_citation",
+                                "text": "【8:0†source】",
+                                "start_index": 455,
+                                "end_index": 467,
+                                "file_citation": {
+                                    "file_id": "file-HyMB98nO5Nz5hYg2DsybdQYj"
+                                }
+                            },
+                            {
+                                "type": "file_citation",
+                                "text": "【8:2†source】",
+                                "start_index": 680,
+                                "end_index": 692,
+                                "file_citation": {
+                                    "file_id": "file-HyMB98nO5Nz5hYg2DsybdQYj"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        },
+        {
+            "id": "msg_7ieS4b51FHCEzeLgKSEb2DeE",
+            "object": "thread.message",
+            "created_at": 1728223827,
+            "assistant_id": null,
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+            "run_id": null,
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "What are your bank account offerings?",
                         "annotations": []
                     }
                 }
@@ -81,11 +219,71 @@
             "metadata": {}
         },
         {
-            "id": "msg_SdHB9XV42HuScme0nBe6zYab",
+            "id": "msg_r6nScacSqT5H4oPGMMjFQaE1",
             "object": "thread.message",
-            "created_at": 1728162643,
+            "created_at": 1728223799,
+            "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+            "run_id": "run_7QaYWczJgpj2YxO7Ck29dnXA",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "Of course! Could you please specify which products or services you are interested in learning more about? This will help me provide you with the most relevant information.",
+                        "annotations": []
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        },
+        {
+            "id": "msg_A5ExBrtoThedPIEuPIZYy0dI",
+            "object": "thread.message",
+            "created_at": 1728223796,
             "assistant_id": null,
-            "thread_id": "thread_PLkOK0UYfhuFZb9qxp8dmKKg",
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+            "run_id": null,
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "I would like to learn about your products",
+                        "annotations": []
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        },
+        {
+            "id": "msg_A33yDwfhAdx0WU2HoYtq6ZOz",
+            "object": "thread.message",
+            "created_at": 1728223761,
+            "assistant_id": "asst_mKubPnoRJxz3sL90FRE9NEZH",
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
+            "run_id": "run_0uMTMNRzH2ACl1LZso0lxvQk",
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": {
+                        "value": "Hi! How can I assist you today?",
+                        "annotations": []
+                    }
+                }
+            ],
+            "attachments": [],
+            "metadata": {}
+        },
+        {
+            "id": "msg_E7atrNOD9ndgjaEkMQ7HALvC",
+            "object": "thread.message",
+            "created_at": 1728223759,
+            "assistant_id": null,
+            "thread_id": "thread_6s1GO0cikBBlhuLwd3XmGVJz",
             "run_id": null,
             "role": "user",
             "content": [

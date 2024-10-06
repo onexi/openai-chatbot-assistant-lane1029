@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Assistant Chat</title>
+    <title>Banking Assistant</title>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -14,11 +14,13 @@
         color: #ffffff;
       }
       .message-container {
-        height: 200px;
+        height: 400px;
         overflow-y: scroll;
-        border: 1px solid #444;
+        border: 3px solid #444;
         padding: 10px;
         margin-bottom: 15px;
+        margin-left: 30px;
+        margin-right: 30px;
       }
       .message.user {
         color: #0dcaf0;
@@ -30,11 +32,11 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1 class="text-center">Assistant Chat</h1>
+      <h1 class="text-center">Banking Assistant</h1>
 
       <!-- Assistant Selection -->
       <div class="mb-3">
-        <label for="assistant-select" class="form-label">Choose an Assistant</label>
+        <label for="assistant-select" class="form-label">Choose an assistant from the drop down menu below. Then press "Select Assistant".</label>
         <select id="assistant-select" class="form-select" aria-label="Assistant select">
           <option selected disabled>Select an assistant</option>
         </select>
@@ -69,8 +71,9 @@
       <!-- Message Display -->
       <div class="message-container" id="message-container"></div>
 
-      
     </div>
+    <!-- Include the marked library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
