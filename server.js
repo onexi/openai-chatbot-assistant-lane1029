@@ -50,6 +50,7 @@ async function get_assistants() {
     // This can be updated if there are more assiatants you want the user to choose from
     const filteredAssistants = response.data.filter(assistant => ['BankTest'].includes(assistant.name));
     return filteredAssistants;
+    // return response.data
   } catch (error) {
     console.error('Error fetching assistants from OpenAI API:', error.response?.data || error.message);
     throw error;
@@ -82,7 +83,7 @@ async function create_thread() {
 
 // Function to clean the response from the OpenAI API
 // Removes citation placeholders from the response
-function cleanResponse(response) {
+function clean_response(response) {
   return response.replace(/【\d+:\d+†source】/g, ''); // Removes citation placeholders
 }
 
@@ -96,7 +97,7 @@ async function get_all_messages(messages) {
   let response_message = content[0].text.value;
 
   // Clean the response for citation placeholders
-  const cleanedMessage = cleanResponse(response_message);
+  const cleanedMessage = clean_response(response_message);
   return cleanedMessage;
 }
 
