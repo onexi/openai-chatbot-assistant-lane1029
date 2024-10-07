@@ -44,7 +44,7 @@ async function get_assistants() {
   try {
     const response = await openai.beta.assistants.list({
       order: 'desc',
-      limit: 20, // Limit to 20 assistants
+      limit: 50, // Limit to 20 assistants
     });
     // Filter the assistants to only include the ones you want to display
     // This can be updated if there are more assiatants you want the user to choose from

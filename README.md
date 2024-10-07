@@ -23,4 +23,30 @@ This file contains the the code required to create a server and interact with th
 - create_thread: This function created a new thread associated with the chosen assistant.
 - clean_response: This function removes citation tags from the resonse message.
 - get_all_messages: Retrieves the response from the LLM and filters to the actual message
-- 
+- /assistants: retrieves the list of assistants associated with the API Key
+- /select-assistant: calls retrieve_assistant and updates the state
+- /create-thread: Calls create_thread and updates the state
+- /retrieve-response: passes a message to the openai api, receives the output and calls get_all_messages. Updates the state
+
+## index.html
+This file contains the html structure for the webpage.
+
+#### Key Features
+- Drop down menu for the assistants
+- Select assistant button (calls selectAssistant when pressed)
+- New thread button (calls C when pressed)
+- Input message box and send button (calls X when pressed)
+- Message output container to house the user inputs and responses
+- Imports markdown-it to convert markdown responses to html
+- Imports bootstrap for look and feel of the webpage
+
+## scripts.js
+This file contains all of the functions executed when the web page is loaded and when buttons are pressed
+
+#### Key Features
+- fetchAssistants: Calls /assistants in server.js to prepopulate the list of available assistants when web page is loaded.
+- selectAssistant: Grabs the value for the selected assistant calls /select-assistent in the server to get the assistant info. Updates the state.
+- getThread: Calls /create-thread if the assistant has been selected and there is not already an existing thread. Updates state
+- getResponse: Writes the user's message to the message container. Calls /retrieve response and updates the message-container with the response. Updates the state.
+- convertMarkdownToHTML: Converts a message from markdown to HTML if the message is in markdown format
+- writeToMessages: Adds an element to the message container to write the message to the container in the appropriate color.
