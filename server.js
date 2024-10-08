@@ -46,11 +46,7 @@ async function get_assistants() {
       order: 'desc',
       limit: 50, // Limit to 20 assistants
     });
-    // Filter the assistants to only include the ones you want to display
-    // This can be updated if there are more assiatants you want the user to choose from
-    const filteredAssistants = response.data.filter(assistant => ['BankTest'].includes(assistant.name));
-    return filteredAssistants;
-    // return response.data
+    return response.data
   } catch (error) {
     console.error('Error fetching assistants from OpenAI API:', error.response?.data || error.message);
     throw error;
